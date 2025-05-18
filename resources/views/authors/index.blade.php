@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Authors</title>
 </head>
 <body>
-    <h1>Hello World!</h1>
+    <h1>Daftar Penulis</h1>
     <p>Selamat datang di toko Author!</p>
 
-    <!-- Looping data author -->
-    @foreach ($authors as $author)
-        <ul>
-            <li>{{ $author['name'] }}</li>
-        </ul>
-    @endforeach
+    <ul>
+        @foreach ($authors as $author)
+            <li>{{ $author->name }}</li>
+        @endforeach
+    </ul>
 </body>
 </html>
