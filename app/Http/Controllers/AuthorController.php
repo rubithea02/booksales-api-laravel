@@ -10,8 +10,15 @@ class AuthorController extends Controller
     {
         // Ambil semua data author
         $authors = Author::all();
-
+        return response()->json(
+            [
+                "success" => true,
+                "message" => "Get All Resource",
+                "data" => $authors
+            ],
+            200
+        );
         // Kirim ke view
-        return view('authors.index', compact('authors'));
+        // return view('authors.index', compact('authors'));
     }
 }

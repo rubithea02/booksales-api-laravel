@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Genre;
+use GrahamCampbell\ResultType\Success;
 
 class GenreController extends Controller
 {
@@ -12,6 +13,13 @@ class GenreController extends Controller
         $genres = (new Genre)->getGenres();
 
         // Mengirim data genre ke view 'genres.index'
-        return view('genres.index', compact('genres'));
+        return response()->json(
+            [
+                "success" => true,
+                "message" => "Get All Resource",
+                "data" => $genres
+            ],
+            200
+        );
     }
 }
