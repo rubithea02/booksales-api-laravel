@@ -4,6 +4,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\GenreController;
+use App\Http\Controllers\TransactionController;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,22 +33,31 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
 
 // Books: index & show untuk publik
-Route::apiResource('books', BookController::class)->only(['index', 'show']);
-
-// Authors: index & show untuk publik
-Route::apiResource('authors', AuthorController::class)->only(['index', 'show']);
-
-// Genres: index & show untuk publik
-Route::apiResource('genres', GenreController::class)->only(['index', 'show']);
+Route::apiResource('/books', BookController::class)->only(['index', 'show']);
 
 // Group middleware auth dan role admin untuk operasi create, update, destroy
-Route::middleware(['auth:api', 'role:admin'])->group(function () {
-    // Books create, update, destroy
-    Route::apiResource('books', BookController::class)->only(['store', 'update', 'destroy']);
+Route::middleware(['auth:api'])->group(function () {
 
-    // Authors create, update, destroy
-    Route::apiResource('authors', AuthorController::class)->only(['store', 'update', 'destroy']);
+    // Genres: index & show untuk publik
+    Route::apiResource('/genres', GenreController::class)->only(['index', 'show']);
 
-    // Genres create, update, destroy
-    Route::apiResource('genres', GenreController::class)->only(['store', 'update', 'destroy']);
+    // transactions: index & show untuk publik
+    Route::apiResource('/transactions', TransactionController::class)->only(['index', 'show']);
+
+    // Authors: index & show untuk publik
+    Route::apiResource('/authors', AuthorController::class)->only(['index', 'show']);
+
+    Route::middleware(['auth:api', 'role:admin'])->group(function () {
+        // Books create, update, destroy
+        Route::apiResource('/books', BookController::class)->only(['store', 'update', 'destroy']);
+
+        // transactions create, update, destroy
+        Route::apiResource('/transactions', TransactionController::class)->only(['store', 'update', 'destroy']);
+
+        // Authors create, update, destroy
+        Route::apiResource('/authors', AuthorController::class)->only(['store', 'update', 'destroy']);
+
+        // Genres create, update, destroy
+        Route::apiResource('/genres', GenreController::class)->only(['store', 'update', 'destroy']);
+    });
 });
